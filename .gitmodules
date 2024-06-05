@@ -1,0 +1,3 @@
+[submodule "tgwui/text-generation-webui"]
+	path = tgwui/text-generation-webui
+	url = https://github.com/oobabooga/text-generation-webui.git
