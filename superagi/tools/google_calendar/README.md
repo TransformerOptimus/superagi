@@ -109,3 +109,5 @@ Once the ClientID and Secret Key are obtained, you can configure and authorize C
 2. Click on “Authenticate Tool” - which will now take you to the OAuth Flow. 
 
 Once the OAuth Authentication is complete, you can now start using SuperAGI Agents with Google Calendar!
+
+(Note: You will need to use the "List Google Calendar Event" Tool and the "Read File" Tool in order for the "Fetch Google Calendar Event" and "Delete Google Calendar Event" Tool to work, as it requires the Event ID that's obtained by "List Google Calendar Event" tool as a CSV)
