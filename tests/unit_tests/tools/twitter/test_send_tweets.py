@@ -11,6 +11,8 @@ class TestSendTweetsInput(unittest.TestCase):
         self.assertEqual(data.tweet_text, 'Hello world')
         self.assertEqual(data.is_media, True)
         self.assertEqual(data.media_files, ['image1.png', 'image2.png'])
+        self.assertEqual(data.is_reply, False)
+        self.assertEqual(data.reply_to_tweet_id, None)
 
 
 class TestSendTweetsTool(unittest.TestCase):
