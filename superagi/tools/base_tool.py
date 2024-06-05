@@ -4,9 +4,9 @@ from inspect import signature
 from typing import List
 from typing import Optional, Type, Callable, Any, Union, Dict, Tuple
 import yaml
-from pydantic import BaseModel, create_model, validate_arguments, Extra
+from pydantic import BaseModel, create_model, validate_arguments
 from superagi.models.tool_config import ToolConfig
-from sqlalchemy import Column, Integer, String, Boolean
+from sqlalchemy import Column, Integer, String, Booleans
 from superagi.types.key_type import ToolConfigKeyType
 
 
@@ -15,7 +15,7 @@ from superagi.config.config import get_config
 
 class SchemaSettings:
     """Configuration for the pydantic model."""
-    extra = Extra.forbid
+    extra = 'allow'
     arbitrary_types_allowed = True
 
 
@@ -24,7 +24,7 @@ def extract_valid_parameters(
         function: Callable,
 ) -> dict:
     """Get the arguments from a function's signature."""
-    schema = inferred_type.schema()["properties"]
+    schema = inferred_type.model_json_schema()["properties"]
     valid_params = signature(function).parameters
     return {param: schema[param] for param in valid_params if param != "run_manager"}
 
@@ -86,11 +86,11 @@ class BaseTool(BaseModel):
     @property
     def args(self):
         if self.args_schema is not None:
-            return self.args_schema.schema()["properties"]
+            return self.args_schema.model_json_schema()["properties"]
         else:
             name = self.name
             args_schema = create_function_schema(f"{name}Schema", self.execute)
-            return args_schema.schema()["properties"]
+            return args_schema.model_json_schema()["properties"]
 
     @abstractmethod
     def _execute(self, *args: Any, **kwargs: Any):
@@ -109,12 +109,12 @@ class BaseTool(BaseModel):
         if isinstance(tool_input, str):
             if input_args is not None:
                 key_ = next(iter(input_args.__fields__.keys()))
-                input_args.validate({key_: tool_input})
+                input_args.model_validate({key_: tool_input})
             return tool_input
         else:
             if input_args is not None:
-                result = input_args.parse_obj(tool_input)
-                return {k: v for k, v in result.dict().items() if k in tool_input}
+                result = input_args.model_validate(tool_input)
+                return {k: v for k, v in result.model_dump().items() if k in tool_input}
         return tool_input
 
     def _to_args_and_kwargs(self, tool_input: Union[str, Dict]) -> Tuple[Tuple, Dict]:
@@ -127,8 +127,7 @@ class BaseTool(BaseModel):
 
     def execute(
             self,
-            tool_input: Union[str, Dict],
-            **kwargs: Any
+            tool_input: Union[str, Dict]
     ) -> Any:
         """Run the tool."""
         parsed_input = self._parse_input(tool_input)
@@ -162,11 +161,11 @@ class FunctionalTool(BaseTool):
     @property
     def args(self):
         if self.args_schema is not None:
-            return self.args_schema.schema()["properties"]
+            return self.args_schema.model_json_schema()["properties"]
         else:
             name = self.name
             args_schema = create_function_schema(f"{name}Schema", self.execute)
-            return args_schema.schema()["properties"]
+            return args_schema.model_json_schema()["properties"]
 
     def _execute(self, *args: Any, **kwargs: Any):
         return self.func(*args, kwargs)
