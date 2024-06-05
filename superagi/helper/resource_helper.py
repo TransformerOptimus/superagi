@@ -41,13 +41,16 @@ class ResourceHelper:
             final_path = ResourceHelper.get_agent_write_resource_path(file_name, agent, agent_execution)
         else:
             final_path = ResourceHelper.get_resource_path(file_name)
-        file_size = os.path.getsize(final_path)
 
         file_path = ResourceHelper.get_agent_write_resource_path(file_name, agent, agent_execution)
 
         logger.info("make_written_file_resource:", final_path)
         if StorageType.get_storage_type(get_config("STORAGE_TYPE", StorageType.FILE.value)) == StorageType.S3:
             file_path = "resources" + file_path
+            file_size = S3Helper().get_file_size(file_path=file_path)
+        else:
+            file_size = os.path.getsize(final_path)
+
         existing_resource = session.query(Resource).filter_by(
             name=file_name,
             path=file_path,

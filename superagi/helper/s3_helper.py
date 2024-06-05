@@ -55,6 +55,27 @@ class S3Helper:
     def check_file_exists_in_s3(self, file_path):
         response = self.s3.list_objects_v2(Bucket=get_config("BUCKET_NAME"), Prefix="resources" + file_path)
         return 'Contents' in response
+    
+    def get_file_size(self, file_path):
+        """
+        Get the file size of a specific file in S3.
+
+        Args:
+            file_path (str): The path to the file.
+
+        Raises:
+            HTTPException: If the AWS credentials are not found.
+
+        Returns:
+            int: The size of the file in bytes.
+        """
+        try:
+            file_info = self.s3.head_object(Bucket=self.bucket_name, Key=file_path)
+            file_size = file_info['ContentLength']
+            logger.info("File size retrieved from S3 successfully!")
+            return file_size
+        except:
+            raise HTTPException(status_code=500, detail="AWS credentials not found. Check your configuration.")
 
     def read_from_s3(self, file_path):
         file_path = "resources" + file_path
