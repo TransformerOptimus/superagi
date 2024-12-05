@@ -6,8 +6,8 @@ from sqlalchemy import Column, Integer, String
 # from superagi.models import AgentConfiguration
 from superagi.models.base_model import DBBaseModel
 
-marketplace_url = "https://app.superagi.com/api"
-# marketplace_url = "http://localhost:8001"
+#marketplace_url = "https://app.superagi.com/api"
+marketplace_url = "http://localhost:8001"
 
 class Vectordbs(DBBaseModel):
     """

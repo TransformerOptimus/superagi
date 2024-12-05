@@ -442,7 +442,8 @@ export const returnDatabaseIcon = (database) => {
   const dbTypeIcons = {
     'Pinecone': '/images/pinecone.svg',
     'Qdrant': '/images/qdrant.svg',
-    'Weaviate' : '/images/weaviate.svg'
+    'Weaviate' : '/images/weaviate.svg',
+    'MongoDB' : '/images/mongodb.svg',
   };
 
   return dbTypeIcons[database]

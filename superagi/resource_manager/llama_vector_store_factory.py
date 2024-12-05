@@ -55,5 +55,12 @@ class LlamaVectorStoreFactory:
             from qdrant_client import QdrantClient
             qdrant_client = QdrantClient(host=qdrant_host_name, port=qdrant_port)
             return QdrantVectorStore(client=qdrant_client, collection_name=self.index_name)
+        
+        if self.vector_store_name == VectorStoreType.MONGODB:
+            from llama_index.vector_stores.mongodb import MongoDBAtlasVectorSearch
+            import pymongo
+            MDB_URI = get_config("MDB_URI") or "mongodb://localhost:27017"
+            store = MongoDBAtlasVectorSearch(pymongo.MongoClient(MDB_URI))
+            return store
 
         raise ValueError(str(self.vector_store_name) + " vector store is not supported yet.")

@@ -10,7 +10,9 @@ from superagi.vector_store import qdrant
 from superagi.vector_store.redis import Redis
 from superagi.vector_store.embedding.openai import OpenAiEmbedding
 from superagi.vector_store.qdrant import Qdrant
+from superagi.vector_store.mongodb import MongoDB
 
+import pymongo
 
 class VectorFactory:
 
@@ -79,6 +81,12 @@ class VectorFactory:
             redis = Redis(index_name, embedding_model)
             redis.create_index()
             return redis
+        
+        if vector_store == VectorStoreType.MONGODB:
+            index_name = "super-agent-index1"
+            mongodb = MongoDB(index_name, embedding_model)
+            mongodb.create_index()
+            return mongodb
 
         raise ValueError(f"Vector store {vector_store} not supported")
     
@@ -108,3 +116,6 @@ class VectorFactory:
                 return weaviate.Weaviate(client, embedding_model, index_name)
             except:
                 raise ValueError("Weaviate API key not found")
+        if vector_store == VectorStoreType.MONGODB:
+            return MongoDB(pymongo.MongoClient(creds["connection_string"]), index_name=index_name, database_name=creds["database_name"], collection_name=creds["collection_name"], embedding_model=embedding_model)
+        raise ValueError(f"Vector store {vector_store} not supported")

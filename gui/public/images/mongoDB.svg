@@ -1,28 +1,5 @@
-<svg width="28" height="46" viewBox="0 0 28 46" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M14.526 35.0017L13.8823 34.7883C13.8823 34.7883 13.968 31.5312 12.7894 31.3023C12.018 30.404 12.9034 -7.04705 15.7234 31.1746C15.1884 31.446 14.779 31.9137 14.5808 32.48C14.4746 33.3164 14.4563 34.1616 14.526 35.0017Z" fill="url(#paint0_linear_808_12328)"/>
-<path d="M14.8772 31.8533C16.5911 30.5631 17.9037 28.813 18.6623 26.8064C19.421 24.7997 19.5946 22.619 19.1629 20.5176C17.9029 14.9591 14.9192 13.1316 14.5978 12.4339C14.3204 11.9995 14.0837 11.5404 13.8906 11.0625L14.1281 26.5502C14.1281 26.5502 13.6361 31.2833 14.8772 31.8533Z" fill="url(#paint1_linear_808_12328)"/>
-<path d="M13.5574 32.0591C13.5574 32.0591 8.31081 28.4857 8.61423 22.1643C8.64254 20.2585 9.07949 18.3811 9.89559 16.6587C10.7117 14.9363 11.8879 13.4091 13.3448 12.1803C13.5151 12.0356 13.6503 11.8543 13.7404 11.6499C13.8305 11.4454 13.8732 11.2233 13.8651 11C14.1917 11.7029 14.1385 21.494 14.1728 22.6391C14.3057 27.0937 13.9251 31.2183 13.5574 32.0591Z" fill="url(#paint2_linear_808_12328)"/>
-<defs>
-<linearGradient id="paint0_linear_808_12328" x1="10.1988" y1="23.218" x2="17.5974" y2="25.7287" gradientUnits="userSpaceOnUse">
-<stop offset="0.231" stop-color="#999875"/>
-<stop offset="0.563" stop-color="#9B9977"/>
-<stop offset="0.683" stop-color="#A09F7E"/>
-<stop offset="0.768" stop-color="#A9A889"/>
-<stop offset="0.837" stop-color="#B7B69A"/>
-<stop offset="0.896" stop-color="#C9C7B0"/>
-<stop offset="0.948" stop-color="#DEDDCB"/>
-<stop offset="0.994" stop-color="#F8F6EB"/>
-<stop offset="1" stop-color="#FBF9EF"/>
-</linearGradient>
-<linearGradient id="paint1_linear_808_12328" x1="12.9152" y1="10.9518" x2="16.186" y2="31.3766" gradientUnits="userSpaceOnUse">
-<stop stop-color="#48A547"/>
-<stop offset="1" stop-color="#3F9143"/>
-</linearGradient>
-<linearGradient id="paint2_linear_808_12328" x1="8.16293" y1="22.79" x2="16.9406" y2="19.8504" gradientUnits="userSpaceOnUse">
-<stop stop-color="#41A247"/>
-<stop offset="0.352" stop-color="#4BA74B"/>
-<stop offset="0.956" stop-color="#67B554"/>
-<stop offset="1" stop-color="#69B655"/>
-</linearGradient>
-</defs>
+<?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+<svg width="800px" height="800px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+   <circle cx="512" cy="512" r="512" style="fill:#13aa52"/>
+   <path d="M648.86 449.44c-32.34-142.73-108.77-189.66-117-207.59-9-12.65-18.12-35.15-18.12-35.15-.15-.38-.39-1.05-.67-1.7-.93 12.65-1.41 17.53-13.37 30.29-18.52 14.48-113.54 94.21-121.27 256.37-7.21 151.24 109.25 241.36 125 252.85l1.79 1.27v-.11c.1.76 5 36 8.44 73.34H526a726.68 726.68 0 0 1 13-78.53l1-.65a204.48 204.48 0 0 0 20.11-16.45l.72-.65c33.48-30.93 93.67-102.47 93.08-216.53a347.07 347.07 0 0 0-5.05-56.76zM512.35 659.12s0-212.12 7-212.08c5.46 0 12.53 273.61 12.53 273.61-9.72-1.17-19.53-45.03-19.53-61.53z" style="fill:#fff"/>
 </svg>

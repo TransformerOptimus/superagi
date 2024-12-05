@@ -4,6 +4,7 @@ from superagi.types.vector_store_types import VectorStoreType
 from superagi.vector_store.pinecone import Pinecone
 from superagi.vector_store.weaviate import Weaviate
 from superagi.vector_store.qdrant import Qdrant
+from superagi.vector_store.mongodb import MongoDB
 from superagi.vector_store.vector_factory import VectorFactory
 import pinecone
 import weaviate
@@ -57,6 +58,10 @@ class TestVectorFactory(unittest.TestCase):
 
         vector_store = VectorFactory.get_vector_storage(VectorStoreType.QDRANT, 'test_index', mock_embedding_model)
         self.assertIsInstance(vector_store, Qdrant)
+
+        # Test MongoDB
+        vector_store = VectorFactory.get_vector_storage(VectorStoreType.MONGODB, 'test_index', mock_embedding_model)
+        self.assertIsInstance(vector_store, MongoDB)
 
         # Test unsupported vector store
         with self.assertRaises(ValueError):

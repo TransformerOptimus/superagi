@@ -20,9 +20,12 @@ def get_vector_db_list():
 
 @router.get("/marketplace/list")
 def get_marketplace_vectordb_list():
-    organisation_id = int(get_config("MARKETPLACE_ORGANISATION_ID"))
-    vector_dbs = db.session.query(Vectordbs).filter(Vectordbs.organisation_id == organisation_id).all()
-    return vector_dbs
+    return [
+        {"id":1,"db_type":None,"created_at":"2023-07-28T12:27:48.692917","name":"Pinecone","organisation_id":13,"updated_at":"2023-07-28T12:27:48.692917"},
+        {"id":2,"db_type":None,"created_at":"2023-07-28T12:27:48.692917","name":"Qdrant","organisation_id":13,"updated_at":"2023-07-28T12:27:48.692917"},
+        {"id":233,"db_type":None,"created_at":"2023-08-16T14:00:02.350730","name":"Weaviate","organisation_id":13,"updated_at":"2023-08-16T14:00:02.350730"},
+        {"id":277,"db_type":None,"created_at":"2023-08-16T14:00:02.350730","name":"MongoDB","organisation_id":13,"updated_at":"2023-08-16T14:00:02.350730"}
+    ]
 
 @router.get("/user/list")
 def get_user_connected_vector_db_list(organisation = Depends(get_user_organisation)):
@@ -121,6 +124,24 @@ def connect_weaviate_vector_db(data: dict, organisation = Depends(get_user_organ
 
     return {"id": weaviate_db.id, "name": weaviate_db.name}
 
+@router.post("/connect/mongodb")
+def connect_mongodb_vector_db(data: dict, organisation = Depends(get_user_organisation)):
+    db_creds = {
+        "connection_string": data["connection_string"]
+    }
+    for collection in data["collections"]:
+        try:
+            vector_db_storage = VectorFactory.build_vector_storage("mongodb", collection, **db_creds)
+            db_connect_for_index = vector_db_storage.get_index_stats()
+            index_state = "Custom" if db_connect_for_index["vector_count"] > 0 else "None"
+        except:
+            raise HTTPException(status_code=400, detail="Unable to connect MongoDB")
+    mdb = Vectordbs.add_vector_db(db.session, data["name"], "MongoDB", organisation)
+    VectordbConfigs.add_vector_db_config(db.session, mdb.id, db_creds)
+    for collection in data["collections"]:
+        VectordbIndices.add_vector_index(db.session, collection, mdb.id, index_state, db_connect_for_index["dimensions"])
+    
+    return {"id": mdb.id, "name": mdb.name}
 @router.put("/update/vector_db/{vector_db_id}")
 def update_vector_db(new_indices: list, vector_db_id: int):
     vector_db = Vectordbs.get_vector_db_from_id(db.session, vector_db_id)
