@@ -44,7 +44,7 @@ def get_user_organisation(Authorize: AuthJWT = Depends(check_auth)):
     return organisation
 
 
-def get_current_user(Authorize: AuthJWT = Depends(check_auth), request: Request = Depends()):
+def get_current_user(Authorize: AuthJWT = Depends(check_auth), request = Depends()):
     env = get_config("ENV", "DEV")
 
     if env == "DEV":
