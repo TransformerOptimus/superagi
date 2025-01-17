@@ -130,16 +130,29 @@ def download_file_by_id(resource_id: int,
 
     Raises:
         HTTPException (status_code=400): If the resource with the specified ID is not found.
+        HTTPException (status_code=403): If the user doesn't have permission to access this resource.
         HTTPException (status_code=404): If the file is not found.
 
     """
+    # Get current user's organization_id from JWT token
+    current_user_org_id = Authorize.get_jwt_subject()
 
+    # First check if resource exists
     resource = db.session.query(Resource).filter(Resource.id == resource_id).first()
-    download_file_path = resource.path
-    file_name = resource.name
-
     if not resource:
         raise HTTPException(status_code=400, detail="Resource Not found!")
+
+    # Get the agent that owns this resource
+    agent = db.session.query(Agent).filter(Agent.id == resource.agent_id).first()
+    if not agent:
+        raise HTTPException(status_code=400, detail="Associated agent not found!")
+
+    # Verify the authenticated user belongs to the same organization as the agent
+    if str(agent.organisation_id) != str(current_user_org_id):
+        raise HTTPException(status_code=403, detail="You don't have permission to access this resource")
+
+    download_file_path = resource.path
+    file_name = resource.name
 
     if resource.storage_type == StorageType.S3.value:
         bucket_name = get_config("BUCKET_NAME")
